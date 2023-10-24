@@ -1,5 +1,5 @@
-#%%
-
+# %%
+# %%
 #
 # 1. In this exercise we will make a "Patient" class
 
@@ -18,12 +18,6 @@
 # the parameters should be stored as attributes
 # called "name" and "symptoms" respectively
 
-class Patient:
-    def __init__(self, name:str, symptoms:list):
-        self.name = name
-        self.symptoms = symptoms
-
-#%%
 # 1.2)
 # Create a method called "add_test"
 # which takes two paramters:
@@ -31,17 +25,6 @@ class Patient:
 # 2. the results of the test (bool)
 
 # This information should be stored somehow.
-
-class Patient:
-    def __init__(self, name:str, symptoms:list):
-        self.name = name
-        self.symptoms = symptoms
-        self.tests = {}
-
-    def add_test(self, test_name:str, test_result:bool):
-        self.tests[test_name] = test_result
-
-#%%
 # 1.3)
 # Create a method called has_covid()
 # which takes no parameters.
@@ -60,30 +43,65 @@ class Patient:
 #    following symptoms:
 #    ['fever', 'cough', 'anosmia']
 
+from math import pi, sqrt
+import math
+from abc import ABC, abstractmethod
+import random
+from itertools import permutations
+import itertools
+
+
 class Patient:
-    def __init__(self, name:str, symptoms:list):
+    def __init__(self, name, symptoms):
         self.name = name
         self.symptoms = symptoms
         self.tests = {}
 
-    def add_test(self, test_name, test_result):
-        self.tests[test_name] = test_result
+    def add_test(self, test_name, results):
+        self.tests[test_name] = results
 
     def has_covid(self):
-        if 'covid' in self.tests:
-            return 0.99 if self.tests['covid'] == True else 0.01
-        else:
-            probability = 0.05
-            for symptom in ['fever', 'cough', 'anosmia']:
-                if symptom in self.symptoms:
-                    probability += 0.1
+        probability = 0.05
+
+        for symptom in ['fever', 'cough', 'anosmia']:
+            if symptom in self.symptoms:
+                probability += 0.1
+
+        if 'Covid' in self.tests:
+            return 0.99 if self.tests['Covid'] == 'True' else 0.01
+
+        for test_name, test_name in self.tests.items():
+            if test_name != 'Covid':
+                return probability
+
         return probability
 
 
-#%%
+# Test class for a Patient with Covid and check prob return is 0.99
+patient1 = Patient('Julia', ['fever', 'cough', 'anosmia'])
+patient1.add_test('Covid', 'True')
+covid_probability = patient1.has_covid()
+print(covid_probability)
+
+# Test class for a Patient with Covid test with false result and check prob
+# retun is 0.01
+patient2 = Patient('Julia', ['fever', 'cough'])
+patient2.add_test('Covid', 'False')
+covid_probability = patient2.has_covid()
+print(covid_probability)
+
+# Test class for a Patient with no Covid test (another test either positive or negative)
+# and check prob return is 0.05 + 0.01  for each additional symptom
+patient3 = Patient('Julia', ['fever', 'cough'])
+patient3.add_test('Flu', 'True')
+covid_probability = patient3.has_covid()
+print(covid_probability)
+
+
+# %%
 
 # 2. In this exercise you will make an English Deck class made of Card classes
-# 
+#
 # the Card class should represent each of the cards
 #
 # the Deck class should represent the collection of cards and actions on them
@@ -95,20 +113,19 @@ class Patient:
 
 # 2.2) Create a Deck class called "Deck".
 # The constructor will create an English Deck (suits: Hearts, Diamonds, Clubs, Spades and values: A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K). It will create a list of cards that contain each of the existing cards in an English Deck.
-# Create a method called "shuffle" that shuffles the cards randomly. 
+# Create a method called "shuffle" that shuffles the cards randomly.
 # Create a method called "draw" that will draw a single card and print the suit and value. When a card is drawn, the card should be removed from the deck.
 
 class Card:
-    def __init__(self, suit:str, value:str):
+    def __init__(self, suit: str, value: str):
         self.suit = suit
         self.value = value
 
-import random
 
 class Deck:
     def __init__(self):
         self.cards = [Card(suit, value) for suit in ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-            for value in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']]
+                      for value in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']]
 
     def shuffle(self):
         random.shuffle(self.cards)
@@ -120,6 +137,7 @@ class Deck:
         else:
             print("No more cards to draw.")
 
+
 deck = Deck()
 deck.shuffle()
 deck.draw()
@@ -127,10 +145,10 @@ deck.draw()
 deck.draw()
 deck.draw()
 deck.draw()
-#%%
+# %%
 
-# 3. In this exercise you will create an interface that will serve as template 
-# for different figures to compute their perimeter and surface. 
+# 3. In this exercise you will create an interface that will serve as template
+# for different figures to compute their perimeter and surface.
 
 # 3.1Create an abstract class (interface) called "PlaneFigure" with two abstract methods:
 # compute_perimeter() that will implement the formula to compute the perimeter of the plane figure.
@@ -142,10 +160,9 @@ deck.draw()
 
 # 3.3 Create a child class called "Circle" that inherits from "PlaneFigure" and has as parameters in the constructor "radius" (radius of the circle). Implement the abstract methods with the formula of the circle.
 
-from abc import ABC, abstractmethod
-from math import pi, sqrt
 
 # 3.1 Create an abstract class (interface) called "PlaneFigure"
+
 class PlaneFigure(ABC):
 
     @abstractmethod
@@ -157,6 +174,8 @@ class PlaneFigure(ABC):
         pass
 
 # 3.2 Create a child class called "Triangle"
+
+
 class Triangle(PlaneFigure):
 
     def __init__(self, base: int, c1: int, c2: int, h: int):
@@ -192,9 +211,11 @@ class Triangle(PlaneFigure):
         return self.base * self.height / 2
 
 # 3.3 Create a child class called "Rectangle"
+
+
 class Rectangle(PlaneFigure):
 
-    def __init__(self, a:int, b:int):
+    def __init__(self, a: int, b: int):
         if self.is_valid(a, b):
             self.side_a = a
             self.side_b = b
@@ -215,14 +236,16 @@ class Rectangle(PlaneFigure):
         return self.side_a * self.side_b
 
 # 3.4 Create a child class called "Circle"
+
+
 class Circle(PlaneFigure):
 
-    def __init__(self, radius:int):
+    def __init__(self, radius: int):
         if self.is_valid(radius):
             self.radius = radius
         else:
             raise ValueError("Invalid circle radius")
-    
+
     @staticmethod
     def is_valid(radius):
         if radius > 0:
@@ -235,6 +258,7 @@ class Circle(PlaneFigure):
 
     def compute_surface(self):
         return pi * self.radius ** 2
+
 
 # Example Usage:
 triangle = Triangle(base=3, c1=4, c2=5, h=2)
@@ -249,5 +273,4 @@ circle = Circle(radius=20)
 print("Circle Perimeter:", circle.compute_perimeter())
 print("Circle Surface:", circle.compute_surface())
 
-#%%
-
+# %%
