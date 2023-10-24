@@ -18,6 +18,14 @@
 # the parameters should be stored as attributes
 # called "name" and "symptoms" respectively
 
+class Patient:
+    
+    def __init__(self, name, symptoms):
+        self.name = name
+        self.symptoms = symptoms
+    
+    
+
 
 #
 # 1.2)
