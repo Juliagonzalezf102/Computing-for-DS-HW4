@@ -1,5 +1,4 @@
 # %%
-# %%
 #
 # 1. In this exercise we will make a "Patient" class
 
@@ -97,7 +96,6 @@ patient3.add_test('Flu', 'True')
 covid_probability = patient3.has_covid()
 print(covid_probability)
 
-
 # %%
 
 # 2. In this exercise you will make an English Deck class made of Card classes
@@ -117,39 +115,47 @@ print(covid_probability)
 # Create a method called "draw" that will draw a single card and print the suit and value. When a card is drawn, the card should be removed from the deck.
 
 class Card:
-    def __init__(self, suit: str, value: str):
+    def __init__(self, suit, value):
         self.suit = suit
         self.value = value
 
 
-class Deck:
+class Deck(Card):
     def __init__(self):
-        self.cards = [Card(suit, value) for suit in ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-                      for value in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']]
+        super().__init__(suit=None, value=None)
+        self.suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+        self.values = ['A', '2', '3', '4', '5',
+                       '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+        self.shuffled_cards = {}
 
     def shuffle(self):
-        random.shuffle(self.cards)
+        shuffled_cards = list(itertools.product(self.suits, self.values))
+        random.shuffle(shuffled_cards)
+        self.shuffled_cards = shuffled_cards
 
     def draw(self):
-        if self.cards:
-            card = self.cards.pop()
-            print(f"You drew the {card.value} of {card.suit}")
-        else:
-            print("No more cards to draw.")
+        if not self.shuffled_cards:
+            print('No more cards can be drawn')
+            return None
+
+        random_draw = random.choice(self.shuffled_cards)
+        self.shuffled_cards.remove(random_draw)
+        return random_draw, self.shuffled_cards
 
 
 deck = Deck()
 deck.shuffle()
-deck.draw()
-deck.draw()
-deck.draw()
-deck.draw()
-deck.draw()
-#%%
-while deck.cards:
-    deck.draw()
-print('end')
-#%%
+
+while True:
+    drawn_card = deck.draw()
+    if drawn_card:
+        card, updated_deck = drawn_card
+        print("Drawn card:", card)
+    else:
+        print("No more cards can be drawn.")
+        break
+
+# %%
 
 # 3. In this exercise you will create an interface that will serve as template
 # for different figures to compute their perimeter and surface.
