@@ -71,8 +71,8 @@ class Patient:
             return 0.01
         else:
             prob = 0.05
-            for symptom in self.symptoms:
-                if symptom in ['fever', 'cough', 'anosmia']:
+            for symptom in ['fever', 'cough', 'anosmia']:
+                if symptom in self.symptoms:
                     prob += 0.1
             return prob
 
@@ -124,9 +124,15 @@ class Deck:
     
     def draw(self):
         self.shuffle()
-        card = self.cards.pop()
+        try:
+            card = self.cards.pop()
+        except IndexError:
+            card = None
         #print(f'{card.value} of {card.suit}')
-        return f"{card.value} of {card.suit}"
+        if card == None:
+            return 'No more cards in the deck'
+        else:
+            return f"{card.value} of {card.suit}"
 
 np.random.seed(168)
 english_deck = Deck()
@@ -137,8 +143,11 @@ while True:
     if len(english_deck.cards) == 0:
         break
 
+
+
 print(len(result))
 display(result)
+print(english_deck.draw())
 
 #%%
 ###################
