@@ -165,7 +165,7 @@ class Triangle(PlaneFigure):
             # Check the condition for height
             height_condition = height < min(c1, c2)
 
-            # Return True if all conditions are satisfied
+            # Return True if all conditions are satisfied and False otherwise
             return condition1 and condition2 and condition3 and height_condition
         else:
             return False
@@ -227,15 +227,15 @@ class Circle(PlaneFigure):
 
 '''
 # Example Usage:
-triangle = Triangle(base=3, c1=4, c2=5, h=2)
+triangle = Triangle(base=3.5329, c1=4, c2=5.55, h=2)
 print("Triangle Perimeter:", triangle.compute_perimeter())
 print("Triangle Surface:", triangle.compute_surface())
 
-rectangle = Rectangle(a=4, b=60)
+rectangle = Rectangle(a=4.1111234, b=60.02)
 print("Rectangle Perimeter:", rectangle.compute_perimeter())
 print("Rectangle Surface:", rectangle.compute_surface())
 
-circle = Circle(radius=20)
+circle = Circle(radius=20.56)
 print("Circle Perimeter:", circle.compute_perimeter())
 print("Circle Surface:", circle.compute_surface())
 '''
