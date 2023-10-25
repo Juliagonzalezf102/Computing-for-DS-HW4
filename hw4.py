@@ -97,7 +97,7 @@ class Card:
 class Deck:
     def __init__(self):
         self.cards = [Card(suit, value) for suit in ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-                      for value in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']]
+                    for value in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']]
 
     def shuffle(self):
         random.shuffle(self.cards)
@@ -106,21 +106,11 @@ class Deck:
         if self.cards:
             card = self.cards.pop()
             print(f"You drew the {card.value} of {card.suit}")
+        
         else:
             print("No more cards to draw.")
 
 
-deck = Deck()
-deck.shuffle()
-deck.draw()
-deck.draw()
-deck.draw()
-deck.draw()
-deck.draw()
-#%%
-while deck.cards:
-    deck.draw()
-print('end')
 #%%
 
 # 3. In this exercise you will create an interface that will serve as template
