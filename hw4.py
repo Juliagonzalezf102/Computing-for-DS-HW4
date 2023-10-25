@@ -145,7 +145,11 @@ deck.draw()
 deck.draw()
 deck.draw()
 deck.draw()
-# %%
+#%%
+while deck.cards:
+    deck.draw()
+print('end')
+#%%
 
 # 3. In this exercise you will create an interface that will serve as template
 # for different figures to compute their perimeter and surface.
