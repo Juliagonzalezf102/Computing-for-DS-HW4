@@ -225,7 +225,7 @@ class Circle(PlaneFigure):
     def compute_surface(self):
         return pi * self.radius ** 2
 
-
+'''
 # Example Usage:
 triangle = Triangle(base=3, c1=4, c2=5, h=2)
 print("Triangle Perimeter:", triangle.compute_perimeter())
@@ -238,5 +238,5 @@ print("Rectangle Surface:", rectangle.compute_surface())
 circle = Circle(radius=20)
 print("Circle Perimeter:", circle.compute_perimeter())
 print("Circle Surface:", circle.compute_surface())
-
+'''
 # %%
