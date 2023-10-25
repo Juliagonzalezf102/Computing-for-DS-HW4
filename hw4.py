@@ -50,52 +50,24 @@ import random
 from itertools import permutations
 import itertools
 
-
 class Patient:
-    def __init__(self, name, symptoms):
+    def __init__(self, name:str, symptoms:list):
         self.name = name
         self.symptoms = symptoms
         self.tests = {}
 
-    def add_test(self, test_name, results):
-        self.tests[test_name] = results
+    def add_test(self, test_name, test_result):
+        self.tests[test_name] = test_result
 
     def has_covid(self):
-        probability = 0.05
-
-        for symptom in ['fever', 'cough', 'anosmia']:
-            if symptom in self.symptoms:
-                probability += 0.1
-
-        if 'Covid' in self.tests:
-            return 0.99 if self.tests['Covid'] == 'True' else 0.01
-
-        for test_name, test_name in self.tests.items():
-            if test_name != 'Covid':
-                return probability
-
+        if 'covid' in self.tests:
+            return 0.99 if self.tests['covid'] == True else 0.01
+        else:
+            probability = 0.05
+            for symptom in ['fever', 'cough', 'anosmia']:
+                if symptom in self.symptoms:
+                    probability += 0.1
         return probability
-
-
-# Test class for a Patient with Covid and check prob return is 0.99
-patient1 = Patient('Julia', ['fever', 'cough', 'anosmia'])
-patient1.add_test('Covid', 'True')
-covid_probability = patient1.has_covid()
-print(covid_probability)
-
-# Test class for a Patient with Covid test with false result and check prob
-# retun is 0.01
-patient2 = Patient('Julia', ['fever', 'cough'])
-patient2.add_test('Covid', 'False')
-covid_probability = patient2.has_covid()
-print(covid_probability)
-
-# Test class for a Patient with no Covid test (another test either positive or negative)
-# and check prob return is 0.05 + 0.01  for each additional symptom
-patient3 = Patient('Julia', ['fever', 'cough'])
-patient3.add_test('Flu', 'True')
-covid_probability = patient3.has_covid()
-print(covid_probability)
 
 
 # %%
